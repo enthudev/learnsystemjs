@@ -2,10 +2,7 @@ System.config({
   defaultJSExtensions: true,
   transpiler: "babel",
   babelOptions: {
-    "optional": [
-      "runtime",
-      "optimisation.modules.system"
-    ],
+    "optional": [],
     "stage": 0
   },
   paths: {
@@ -14,12 +11,27 @@ System.config({
   },
 
   map: {
+    "angular": "github:angular/bower-angular@1.5.7",
+    "angular-mocks": "github:angular/bower-angular-mocks@1.5.7",
+    "angular-route": "github:angular/bower-angular-route@1.5.7",
     "babel": "npm:babel-core@5.8.38",
     "babel-runtime": "npm:babel-runtime@5.8.38",
     "card": "cards/card.js",
     "core-js": "npm:core-js@1.2.6",
     "deck": "cards/deck.js",
+    "fatlinesofcode/ngDraggable": "github:fatlinesofcode/ngDraggable@0.1.8",
+    "ngDraggable": "github:fatlinesofcode/ngDraggable@0.1.8",
+    "ngdraggable": "github:fatlinesofcode/ngDraggable@0.1.8",
     "underscore": "npm:underscore@1.8.3",
+    "github:angular/bower-angular-mocks@1.5.7": {
+      "angular": "github:angular/bower-angular@1.5.7"
+    },
+    "github:angular/bower-angular-route@1.5.7": {
+      "angular": "github:angular/bower-angular@1.5.7"
+    },
+    "github:fatlinesofcode/ngDraggable@0.1.8": {
+      "angular": "github:angular/bower-angular@1.4.7"
+    },
     "github:jspm/nodelibs-assert@0.1.0": {
       "assert": "npm:assert@1.4.1"
     },

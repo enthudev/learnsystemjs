@@ -15,4 +15,3 @@ Card.prototype.turnUp = function () {
 Card.prototype.turnDown = function () {
   this.turnedUp = false;
 };
-

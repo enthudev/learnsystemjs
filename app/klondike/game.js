@@ -1,63 +1,70 @@
-import {Deck} from "../cards/deck.js"
-  angular.module("klondike.game", [])
-    .service("klondikeGame", ["scoring", KlondikeGame]);
+import _ from "underscore";
+import angular from "angular";
 
-  function KlondikeGame(scoring) {
-    this.newGame = function newGame() {
-      var cards = new Deck().shuffled();
-      this.newGameFromDeck(cards);
-    };
+import Deck from "../cards/deck.js"
+import TableauPile from "./piles/tableauPile.js";
+import RemainderPile from "./piles/remainderPile.js";
+import FoundationPile from "./piles/foundationPile.js";
 
-    this.newGameFromDeck = function (cards) {
-      scoring.newGame();
-      turnAllCardsDown(cards);
-      this.tableaus = dealTableaus(cards);
-      this.foundations = buildFoundations();
-      this.remainder = dealRemainder(cards);
-    };
+angular.module("klondike.game", [])
+  .service("klondikeGame", ["scoring", KlondikeGame]);
 
-    function turnAllCardsDown(cards) {
-      cards.forEach(function (card) {
-        card.turnDown();
-      });
-    }
+function KlondikeGame(scoring) {
+  this.newGame = function newGame() {
+    var cards = new Deck().shuffled();
+    this.newGameFromDeck(cards);
+  };
 
-    function dealTableaus(cards) {
-      var tableaus = [
-        new TableauPile(cards.slice(0, 1), scoring),
-        new TableauPile(cards.slice(1, 3), scoring),
-        new TableauPile(cards.slice(3, 6), scoring),
-        new TableauPile(cards.slice(6, 10), scoring),
-        new TableauPile(cards.slice(10, 15), scoring),
-        new TableauPile(cards.slice(15, 21), scoring),
-        new TableauPile(cards.slice(21, 28), scoring)
-      ];
-      tableaus.forEach(function (tableau) {
-        tableau.turnTopCardUp();
-      });
-      return tableaus;
-    }
+  this.newGameFromDeck = function (cards) {
+    scoring.newGame();
+    turnAllCardsDown(cards);
+    this.tableaus = dealTableaus(cards);
+    this.foundations = buildFoundations();
+    this.remainder = dealRemainder(cards);
+  };
 
-    function buildFoundations() {
-      return _.range(1, 5)
-        .map(function () {
-          return new FoundationPile([], scoring);
-        });
-    }
-
-    function dealRemainder(cards) {
-      return new RemainderPile(cards.slice(28), scoring);
-    }
+  function turnAllCardsDown(cards) {
+    cards.forEach(function (card) {
+      card.turnDown();
+    });
   }
 
-  KlondikeGame.prototype.tryMoveTopCardToAnyFoundation = function (sourcePile) {
-    if (sourcePile.isEmpty()) {
-      return;
-    }
-    var foundationThatWillAccept = _.find(this.foundations, function (foundation) {
-      return foundation.willAcceptCard(sourcePile.topCard());
+  function dealTableaus(cards) {
+    var tableaus = [
+      new TableauPile(cards.slice(0, 1), scoring),
+      new TableauPile(cards.slice(1, 3), scoring),
+      new TableauPile(cards.slice(3, 6), scoring),
+      new TableauPile(cards.slice(6, 10), scoring),
+      new TableauPile(cards.slice(10, 15), scoring),
+      new TableauPile(cards.slice(15, 21), scoring),
+      new TableauPile(cards.slice(21, 28), scoring)
+    ];
+    tableaus.forEach(function (tableau) {
+      tableau.turnTopCardUp();
     });
-    if (foundationThatWillAccept) {
-      foundationThatWillAccept.moveCardsFrom(sourcePile);
-    }
-  };
+    return tableaus;
+  }
+
+  function buildFoundations() {
+    return _.range(1, 5)
+      .map(function () {
+        return new FoundationPile([], scoring);
+      });
+  }
+
+  function dealRemainder(cards) {
+    return new RemainderPile(cards.slice(28), scoring);
+  }
+}
+
+KlondikeGame.prototype.tryMoveTopCardToAnyFoundation = function (sourcePile) {
+  if (sourcePile.isEmpty()) {
+    return;
+  }
+  var foundationThatWillAccept = _.find(this.foundations, function (foundation) {
+    return foundation.willAcceptCard(sourcePile.topCard());
+  });
+  if (foundationThatWillAccept) {
+    foundationThatWillAccept.moveCardsFrom(sourcePile);
+  }
+};

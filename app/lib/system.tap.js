@@ -1,13 +1,12 @@
 var normalize = System.normalize;
-System.normalize = function(name, parentName, parentAddress) {
-    console.log(JSON.stringify({
-        name: name,
-        parentName: parentName,
-        parentAddress: parentAddress
+System.normalize = function (name, parentName, parentAddress) {
+  console.log("normalize: " + JSON.stringify({
+      name: name,
+      parentName: parentName,
+      parentAddress: parentAddress
     }));
-
-    return normalize.call(this, name, parentName, parentAddress);
-}
+  return normalize.call(this, name, parentName, parentAddress);
+};
 
 var systemLocate = System.locate;
 System.locate = function (load) {
@@ -32,3 +31,6 @@ System.instantiate = function (load) {
   console.log("before instantiate: " + JSON.stringify(load));
   return systemInstantiate.call(this, load);
 };
+
+
+
