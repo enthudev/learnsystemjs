@@ -1,6 +1,4 @@
-(function () {
-  "use strict";
-
+import {Deck} from "../cards/deck.js"
   angular.module("klondike.game", [])
     .service("klondikeGame", ["scoring", KlondikeGame]);
 
@@ -63,5 +61,3 @@
       foundationThatWillAccept.moveCardsFrom(sourcePile);
     }
   };
-
-})();
