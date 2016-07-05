@@ -2,7 +2,10 @@ System.config({
   defaultJSExtensions: true,
   transpiler: "babel",
   babelOptions: {
-    "optional": [],
+    "optional": [
+      "runtime",
+      "optimisation.modules.system"
+    ],
     "stage": 0
   },
   paths: {
